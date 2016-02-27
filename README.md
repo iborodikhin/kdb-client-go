@@ -38,6 +38,7 @@ func main() {
 	
 	// Read file from KDB
 	f, err := client.Get("/test_file.png")
+	// f is now of File type
 	
 	// Remove file from KDB
 	res := client.Delete("/test_file.png")
