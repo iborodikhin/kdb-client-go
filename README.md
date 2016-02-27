@@ -10,20 +10,20 @@ Then call it:
 package main
 
 import (
-  "github.com/iborodikhin.kdb-client-go"
+	"github.com/iborodikhin.kdb-client-go"
 )
 
 func main() {
-  // KDB connection parameters
-  client := Client{
+	// KDB connection parameters
+	client := Client{
 		Host: "127.0.0.1",
 		Port: 1337,
 	}
 
-  // Read local file
+	// Read local file
 	bytes, _ := ioutil.ReadFile("test_file.png")
 
-  // Create file instance for upload
+	// Create file instance for upload
 	file := File{
 		name: "test_file.png",
 		mime: "image/png",
