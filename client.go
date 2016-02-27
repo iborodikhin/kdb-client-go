@@ -30,6 +30,7 @@ type IClient interface {
 // Read file
 func (c Client) Get(filename string) (*File, error) {
 	resp, err := http.Get(c.url(filename))
+	defer resp.Body.Close()
 
 	if err == nil && resp.StatusCode == 200 {
 		body, _ := ioutil.ReadAll(resp.Body)
@@ -47,6 +48,7 @@ func (c Client) Get(filename string) (*File, error) {
 // Save file
 func (c Client) Save(filename string, file File) bool {
 	resp, err := http.Post(c.url(filename), file.mime, bytes.NewReader(file.data))
+	defer resp.Body.Close()
 
 	if err == nil && resp.StatusCode == 200 {
 		return true
@@ -58,7 +60,8 @@ func (c Client) Save(filename string, file File) bool {
 // Remove file
 func (c Client) Delete(filename string) bool {
 	req, err := http.NewRequest("DELETE", c.url(filename), nil)
-	resp, err := c.get_client().Do(req)
+	resp, err := http.DefaultClient.Do(req)
+	defer resp.Body.Close()
 
 	if err == nil && resp.StatusCode == 200 {
 		return true
@@ -70,6 +73,7 @@ func (c Client) Delete(filename string) bool {
 // Check if file exists
 func (c Client) Exists(filename string) bool {
 	resp, err := http.Head(c.url(filename))
+	defer resp.Body.Close()
 
 	if err == nil && resp.StatusCode == 200 {
 		return true
@@ -81,13 +85,4 @@ func (c Client) Exists(filename string) bool {
 // Get url with host and port parts
 func (c Client) url(filename string) string {
 	return fmt.Sprintf("http://%s:%d%s", c.Host, c.Port, filename)
-}
-
-// Get http.Client instance
-func (c Client) get_client() *http.Client {
-	if c.client == nil {
-		c.client = &http.Client{}
-	}
-
-	return c.client
 }
