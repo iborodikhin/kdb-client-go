@@ -26,7 +26,7 @@ func main() {
   // Create file instance for upload
 	file := File{
 		name: "test_file.png",
-		mime: "text/plain",
+		mime: "image/png",
 		data: bytes,
 	}
 	
