@@ -6,19 +6,15 @@ import (
 )
 
 func Test_Save(t *testing.T) {
-	client := Client{
-		Host: "127.0.0.1",
-		Port: 1337,
-	}
-
 	bytes, _ := ioutil.ReadFile("client_test.go")
 
 	file := File{
-		name: "client_test.go",
-		mime: "text/plain",
-		data: bytes,
+		Name: "client_test.go",
+		Mime: "text/plain",
+		Data: bytes,
 	}
-	res := client.Save("/test.go", file)
+
+	res := NewClient("127.0.0.1", 1337).Save("/test.go", file)
 
 	if res == false {
 		t.Error("Error while saving file")
@@ -26,12 +22,7 @@ func Test_Save(t *testing.T) {
 }
 
 func Test_Get(t *testing.T) {
-	client := Client{
-		Host: "127.0.0.1",
-		Port: 1337,
-	}
-
-	f, err := client.Get("/test.go")
+	f, err := NewClient("127.0.0.1", 1337).Get("/test.go")
 
 	if f == nil || err != nil {
 		t.Error("Error while reading file")
@@ -39,12 +30,7 @@ func Test_Get(t *testing.T) {
 }
 
 func Test_Exists(t *testing.T) {
-	client := Client{
-		Host: "127.0.0.1",
-		Port: 1337,
-	}
-
-	res := client.Exists("/test.go")
+	res := NewClient("127.0.0.1", 1337).Exists("/test.go")
 
 	if res == false {
 		t.Error("Error while checking if file exists")
@@ -52,12 +38,7 @@ func Test_Exists(t *testing.T) {
 }
 
 func Test_Delete(t *testing.T) {
-	client := Client{
-		Host: "127.0.0.1",
-		Port: 1337,
-	}
-
-	res := client.Delete("/test.go")
+	res := NewClient("127.0.0.1", 1337).Delete("/test.go")
 
 	if res == false {
 		t.Error("Error while removing file")
