@@ -10,7 +10,7 @@ Then call it:
 package main
 
 import (
-	client "github.com/iborodikhin.kdb-client-go"
+	client "github.com/iborodikhin/kdb-client-go"
 )
 
 func main() {
