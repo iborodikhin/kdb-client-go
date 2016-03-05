@@ -1,4 +1,4 @@
-package kdb_client
+package kdbclient
 
 import (
 	"io/ioutil"
